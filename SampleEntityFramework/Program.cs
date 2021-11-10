@@ -27,15 +27,13 @@ namespace SampleEntityFramework
         //public byte[] RowVersion { get; set; }
         //[ConcurrencyCheck]
         //public string RowIdentifier { get; set; }
-        public int StudentID { get; set; }
+         public int StudentID { get; set; }
         //ComplexType
         //ConcurrencyCheck
         //Multiple-Column Indexes
         //[Index]
         //public int StudentRank { get; set; }
-        public int SchoolID { get; set; }
-        [ForeignKey("SchoolID")]
-        public School SchoolStudied { get; set; }
+        public List<School> SchoolStudied { get; set; }
     }
 
     
@@ -55,7 +53,14 @@ namespace SampleEntityFramework
         public string Name { get; set; }
         public int SchoolID { get; set; }
         //public List<Student> StudentList { get; set; }
-        public Student Studentnrolled { get; set; }
+        public List<Student> Studentenrolled { get; set; }
+    }
+
+    public class StudentDetails
+    {
+        public int Weight { get; set; }
+        public int Height { get; set; }
+        public Student Student { get; set; }
     }
     class Program
     {
@@ -64,17 +69,30 @@ namespace SampleEntityFramework
             Console.WriteLine("Hi Welcome to first EF demo");
             using (StudentManagementContext stuContext = new StudentManagementContext())
             {
-                Student student1 = new Student() {StudentRollNumber=1, Name = "Irfan" , Address="Pearson Vue, 1"};
-                //School school1 = new School() { Name = "Singapore International School" };
-                //student1.School = school1;
-                //FormerStudent student2 = new FormerStudent() { StudentID = 2, Name = "Marvin" };
-                //student2.School = school1;
-                //CurrentStudent student3 = new CurrentStudent() { StudentID = 3, Name = "Han" };
-                //student3.School = school1;
+                //Student student1 = new Student() {Name = "Irfan" , Address="Pearson Vue, 1"};
+                //School school1 = new School() { Name = "Irfan"};
+                ////School school1 = new School() { Name = "Singapore International School" };
+                ////student1.School = school1;
+                ////FormerStudent student2 = new FormerStudent() { StudentID = 2, Name = "Marvin" };
+                ////student2.School = school1;
+                ////CurrentStudent student3 = new CurrentStudent() { StudentID = 3, Name = "Han" };
+                ////student3.School = school1;
+                ////stuContext.Schools.Add(school1);
+                //List<School> schoolList = new List<School>();
+                //schoolList.Add(school1);
+                //List<Student> stuList = new List<Student>();
+                //stuList.Add(student1);
+                //student1.SchoolStudied = schoolList;
+                //school1.Studentenrolled = stuList;
+                //stuContext.Students.Add(student1);
                 //stuContext.Schools.Add(school1);
-                stuContext.Students.Add(student1);
                 //stuContext.Students.Add(student2);
                 //stuContext.Students.Add(student3);
+                //stuContext.SaveChanges();
+                Student student1 = new Student() {Name = "Han" , Address="Pearson Vue, 1"};
+                School school1 = new School() { Name = "Han"};
+                stuContext.Schools.Add(school1);
+                stuContext.Students.Add(student1);
                 stuContext.SaveChanges();
             }
             Console.WriteLine("End");
