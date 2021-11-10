@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SampleEntityFramework
@@ -7,11 +8,26 @@ namespace SampleEntityFramework
     [Table("MyTable")]
     public class Student
     {
-        [Column("StudentName",TypeName ="text")]
+        [Column("StudentName", Order = 1)]
+        [MinLength(5)]
         public string Name { get; set; }
+        [Column("StudentAddress", Order = 0)]
+        [MaxLength(20)]
+        [Required]
         public string Address { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StudentID { get; set; }
+        [Column("RollNumber", Order = 2)]
+        [Key]
+        public int StudentRollNumber { get; set; }
+        [Column("StudentID", Order = 3)]
+        [Key]
+        public int StudentUniqueIdentifier { get; set; }
+        [NotMapped]
+        public string StudentRemarks { get; set; }
+        //[Timestamp]
+        //public byte[] RowVersion { get; set; }
+        [ConcurrencyCheck]
+        public string RowIdentifier { get; set; }
+
         public School School { get; set; }
     }
 
@@ -40,7 +56,7 @@ namespace SampleEntityFramework
             Console.WriteLine("Hi Welcome to first EF demo");
             using (StudentManagementContext stuContext = new StudentManagementContext())
             {
-                Student student1 = new Student() {StudentID=1, Name = "Irfan" };
+                Student student1 = new Student() {StudentRollNumber=1, Name = "Irfan" , Address="Pearson Vue, 1"};
                 School school1 = new School() { Name = "Singapore International School" };
                 student1.School = school1;
                 //FormerStudent student2 = new FormerStudent() { StudentID = 2, Name = "Marvin" };
