@@ -14,6 +14,10 @@ namespace SampleEntityFramework
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //modelBuilder.HasDefaultSchema("My");
+            //modelBuilder.Entity<Student>().ToTable("MyTable", "MyTableSchema");
+            modelBuilder.Entity<Student>().HasRequired(s => s.SchoolStudied).WithRequiredPrincipal(t => t.Studentnrolled);
+            //modelBuilder.Entity<Student>()
             //modelBuilder.Entity<FormerStudent>().Map(m =>
             //{
             //    m.MapInheritedProperties();
